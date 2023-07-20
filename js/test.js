@@ -1,7 +1,5 @@
 $(function () {
-  // Same as document.addEventListener("DOMContentLoaded"...
 
-  // Same as document.querySelector("#navbarToggle").addEventListener("blur",...
   $("#navbarToggle").blur(function (event) {
     var screenWidth = window.innerWidth;
     if (screenWidth < 768) {
@@ -9,18 +7,13 @@ $(function () {
     }
   });
 
-  // In Firefox and Safari, the click event doesn't retain the focus
-  // on the clicked button. Therefore, the blur event will not fire on
-  // user clicking somewhere else in the page and the blur event handler
-  // which is set up above will not be called.
-  // Refer to issue #28 in the repo.
-  // Solution: force focus on the element that the click event fired on
   $("#navbarToggle").click(function (event) {
     $(event.target).focus();
   });
 });
 
 (function (global) {
+
   var dc = {};
 
   var homeHtml = "snippets/home-snippet.html";
@@ -33,28 +26,23 @@ $(function () {
   var menuItemsTitleHtml = "snippets/menu-items-title.html";
   var menuItemHtml = "snippets/menu-item.html";
 
-  // Convenience function for inserting innerHTML for 'select'
   var insertHtml = function (selector, html) {
     var targetElem = document.querySelector(selector);
     targetElem.innerHTML = html;
   };
 
-  // Show loading icon inside element identified by 'selector'.
   var showLoading = function (selector) {
     var html = "<div class='text-center'>";
     html += "<img src='images/ajax-loader.gif'></div>";
     insertHtml(selector, html);
   };
 
-  // Return substitute of '{{propName}}'
-  // with propValue in given 'string'
   var insertProperty = function (string, propName, propValue) {
     var propToReplace = "{{" + propName + "}}";
     string = string.replace(new RegExp(propToReplace, "g"), propValue);
     return string;
   };
 
-  // Remove the class 'active' from home and switch to Menu button
   var switchMenuToActive = function () {
     // Remove 'active' from home button
     var classes = document.querySelector("#navHomeButton").className;
@@ -92,7 +80,7 @@ $(function () {
   // 'categoryShort' is a short_name for a category
   dc.loadMenuItems = function (categoryShort) {
     showLoading("#main-content");
-    $ajaxUtils.sendGetRequest(
+    $ajaxUtils.sendGetRequest( 
       menuItemsUrl + categoryShort + ".json",
       buildAndShowMenuItemsHTML
     );
